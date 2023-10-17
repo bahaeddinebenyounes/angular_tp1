@@ -20,4 +20,42 @@ export class ProduitService {
       ajouterProduit( prod: Produit){
       this.produits.push(prod);
    }
+   supprimerProduit( prod: Produit){
+    //supprimer le produit prod du tableau produits
+    const index = this.produits.indexOf(prod, 0);
+    if (index > -1) {
+    this.produits.splice(index, 1);
+    }
+    //ou Bien
+    /* this.produits.forEach((cur, index) => {
+    if(prod.idProduit === cur.idProduit) {
+    this.produits.splice(index, 1);
+    }
+    }); */
+    }
+    produit! : Produit;
+
+    consulterProduit(id:number): Produit{
+       return this.produits.find(p => p.idProduit == id)!; 
+      }
+
+trierProduits(){ 
+  this.produits = this.produits.sort((n1,n2) => {
+    let x1=n1.idProduit;
+    let x2=n2.idProduit;
+     if (x1 > x2) { 
+      return 1;
+    } 
+     if (n1.idProduit < n2.idProduit) { 
+      return -1; 
+    } 
+    return 0; 
+  }); 
+  } 
+  updateProduit(p:Produit) { 
+    // console.log(p); 
+    this.supprimerProduit(p); 
+    this.ajouterProduit(p); 
+    this.trierProduits(); 
+  }
 }
