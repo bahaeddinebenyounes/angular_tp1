@@ -8,21 +8,23 @@ import { ProduitService } from '../services/produit.service';
   styleUrls: ['./produits.component.css']
 })
 export class ProduitsComponent implements OnInit{
-  produits? : Produit[];
+  produits! : Produit[];
 
   constructor(private produitService: ProduitService){
 
-   // this.produits=[];
+   this.produits=[];
 
 }
-ngOnInit(): void {
-  this.produits = this.produitService.listeProduits();
+ngOnInit(): void { 
+  this.chargerProduits();}
+chargerProduits(){ 
+  this.produitService.listeProduit().subscribe(prods => { console.log(prods); this.produits = prods; }); 
 }
 supprimerProduit(p: Produit)
 {
 //console.log(p);
 let conf = confirm("Etes-vous sûr ?");
 if (conf)
-  this.produitService.supprimerProduit(p);
+this.produitService.supprimerProduit(p.idProduit).subscribe(() => { console.log("produit supprimé"); this.chargerProduits(); });
 }
 }
